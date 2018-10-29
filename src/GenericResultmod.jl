@@ -4,8 +4,6 @@
 ################################################################################
 abstract type AbstractResult end
 
-const Iterate           = Union{Float64,Vector,Void}
-
 mutable struct GenericResult <: AbstractResult
 
 	x :: Iterate
