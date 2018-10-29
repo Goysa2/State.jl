@@ -50,14 +50,14 @@ mutable struct 	NLPAtX <: AbstractResult
 
  function NLPAtX( x          :: Iterate,
                   lambda     :: Iterate;
-                  dx         :: Iterate      = NaN*ones(x),
+                  dx         :: Iterate      = NaN*fill(1.0, size(x)),
                   fx         :: FloatVoid    = NaN,
                   df         :: FloatVoid    = NaN,
-                  gx         :: Iterate      = NaN*ones(x),
-				  g0         :: Iterate      = NaN*ones(x),
+                  gx         :: Iterate      = NaN*fill(1.0, size(x)),
+				  g0         :: Iterate      = NaN*fill(1.0, size(x)),
                   Hx         :: MatrixType   = zeros(0,0),
-                  mu         :: Iterate      = NaN*ones(x),
-                  cx         :: Iterate      = NaN*ones(lambda),
+                  mu         :: Iterate      = NaN*fill(1.0, size(x)),
+                  cx         :: Iterate      = NaN*fill(1, size(lambda)),
                   Jx         :: MatrixType   = zeros(length(x),length(lambda)),
                   start_time :: FloatVoid    = NaN)
 
@@ -69,11 +69,11 @@ end
 An additional constructor for unconstrained problems
 """
 function NLPAtX(x          :: Iterate;
-                dx         :: Iterate      = NaN*ones(x),
+                dx         :: Iterate      = NaN*fill(1.0, size(x)),
                 fx         :: FloatVoid    = NaN,
                 df         :: FloatVoid    = NaN,
-                gx         :: Iterate      = NaN*ones(x),
-                g0         :: Iterate      = NaN*ones(x),
+                gx         :: Iterate      = NaN*fill(1.0, size(x)),
+                g0         :: Iterate      = NaN*fill(1.0, size(x)),
                 Hx         :: MatrixType   = zeros(0,0),
                 start_time :: FloatVoid    = NaN)
 
