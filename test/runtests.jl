@@ -5,5 +5,6 @@ else
     using Test
 end
 
-# write your own tests here
-@test 1 == 2
+using State
+include("test-unitaire-LSAtTmod.jl")
+include("test-unitaire-NLPAtXmod.jl")
