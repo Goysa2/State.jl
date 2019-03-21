@@ -5,7 +5,7 @@ import Base.copy
 
 # export LSAtT, copy, update!
 
-# const FloatVoid         = Union{Float64,Void}
+# const FloatVoid         = Union{FloatBigFloat,Void}
 
 """
 A structure designed to track line search information from one iteration to
@@ -29,26 +29,26 @@ Example:
 ls_a_t = LSAtT(1.0)
 update!(ls_a_t, x = 0.0, h₀ = obj(h, 0.0), g₀ = grad(h, 0.0))
 """
-type 	LSAtT <: AbstractResult
+mutable struct 	LSAtT <: AbstractResult
 
-	x  		     :: Float64		#
-	dx           :: Float64     #
-	ht 		     :: Float64		# h(θ)
-	df           :: Float64
-	gt 		     :: Float64		# h'(θ)
-	h₀         	 :: Float64		# h(0)
-	g₀ 		     :: Float64		# h'(0)
+	x  		     :: FloatBigFloat		#
+	dx           :: FloatBigFloat     #
+	ht 		     :: FloatBigFloat		# h(θ)
+	df           :: FloatBigFloat
+	gt 		     :: FloatBigFloat		# h'(θ)
+	h₀         	 :: FloatBigFloat		# h(0)
+	g₀ 		     :: FloatBigFloat		# h'(0)
 
-	start_time :: Float64
+	start_time :: FloatBigFloat
 
- function LSAtT(t          :: Float64;
-	            dx         :: Float64 = NaN,
-                ht         :: Float64 = NaN,
-				df         :: Float64 = NaN,
-                gt         :: Float64 = NaN,
-                h₀         :: Float64 = NaN,
-                g₀         :: Float64 = NaN,
-                start_time :: Float64 = NaN)
+ function LSAtT(t          :: FloatBigFloat;
+	            dx         :: FloatBigFloat = NaN,
+                ht         :: FloatBigFloat = NaN,
+				df         :: FloatBigFloat = NaN,
+                gt         :: FloatBigFloat = NaN,
+                h₀         :: FloatBigFloat = NaN,
+                g₀         :: FloatBigFloat = NaN,
+                start_time :: FloatBigFloat = NaN)
 
   return new(t, dx, ht, df, gt, h₀, g₀, start_time)
  end
