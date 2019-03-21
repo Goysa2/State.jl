@@ -1,8 +1,8 @@
 module State
 
-const Iterate           = Union{BigFloat, Float64, Vector, Nothing, Float16, Float32}
-const FloatVoid         = Union{BigFloat, Float64, Nothing, Float16, Float32}
-const FloatBigFloat		= Union{BigFloat, Float64, Float16, Float32}
+const Iterate           = Union{Number, Vector, Nothing}
+const FloatVoid         = Union{Number, Nothing}
+const FloatBigFloat		= Number
 const MatrixType        = Any
 
 export Iterate, FloatVoid, MatrixType, FloatBigFloat
