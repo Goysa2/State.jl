@@ -1,7 +1,3 @@
-# Fonction qu'on veut tester
-# include("../LSAtTmod.jl")
-# importall LSAtTmod
-
 # On vérifie que le constructeur par défaut fonctionne
 ls_at_t = LSAtT(0.0)
 

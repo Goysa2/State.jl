@@ -1,11 +1,4 @@
-# module LSAtTmod
-
-# import GenericResultmod: AbstractResult, update!
 import Base.copy
-
-# export LSAtT, copy, update!
-
-# const FloatVoid         = Union{FloatBigFloat,Void}
 
 """
 A structure designed to track line search information from one iteration to
@@ -106,6 +99,3 @@ function copy(ls_at_t :: LSAtT)
                  g₀ = copy(ls_at_t.g₀),
                  start_time = copy(ls_at_t.start_time))
 end
-
-#end of module
-# end

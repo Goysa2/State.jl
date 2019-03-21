@@ -1,14 +1,3 @@
-# module NLPAtXmod
-
-# import GenericResultmod: AbstractResult, update!
-
-# export NLPAtX, update!
-
-# const Iterate           = Union{Float64,Vector,Void}
-# const FloatVoid         = Union{Float64,Void}
-# const MatrixType        = Any
-# const HessType          = Union{Float64,Array}
-
 ################################################################################
 # TODO: add constraints
 ################################################################################
@@ -30,21 +19,21 @@ the iteration x. Basic information is:
 mutable struct 	NLPAtX <: AbstractResult
 
 #Unconstrained State
-	x  		     :: Iterate		# current point
+	x  		     :: Iterate			# current point
     dx           :: Iterate
 	fx 		     :: FloatVoid		# objective function
     df           :: FloatVoid
-	gx 		     :: Iterate		# gradient
+	gx 		     :: Iterate			# gradient
 	g0           :: Iterate
-    Hx           :: MatrixType  # a priori ça doit être une fonction pour Newton... à voir...
+    Hx           :: MatrixType  	# Accurate?
 
 #Bounds states
     mu           :: Iterate #Lagrange multipliers with bounds
 
 #Constrainted state
-    cx           :: Iterate #vector of constraints lc <= c(x) <= uc
-    Jx           :: MatrixType #jacobian matrix
-    lambda       :: Iterate #Lagrange multipliers
+    cx           :: Iterate 	# vector of constraints lc <= c(x) <= uc
+    Jx           :: MatrixType 	# jacobian matrix
+    lambda       :: Iterate 	# Lagrange multipliers
 
     start_time   :: FloatVoid
 
@@ -115,6 +104,3 @@ function update!(nlpatx :: NLPAtX;
 
   	return nlpatx
 end
-
-#end of module
-# end
