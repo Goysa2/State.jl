@@ -28,7 +28,7 @@ mutable struct 	NLPAtX <: AbstractResult
     Hx           :: MatrixType  	# Accurate?
 
 #Bounds states
-    mu           :: Iterate #Lagrange multipliers with bounds
+    mu           :: Iterate     #Lagrange multipliers with bounds
 
 #Constrainted state
     cx           :: Iterate 	# vector of constraints lc <= c(x) <= uc
