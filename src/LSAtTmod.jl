@@ -24,24 +24,24 @@ update!(ls_a_t, x = 0.0, h₀ = obj(h, 0.0), g₀ = grad(h, 0.0))
 """
 mutable struct 	LSAtT <: AbstractResult
 
-	x  		     :: FloatBigFloat		#
-	dx           :: FloatBigFloat     #
-	ht 		     :: FloatBigFloat		# h(θ)
-	df           :: FloatBigFloat
-	gt 		     :: FloatBigFloat		# h'(θ)
-	h₀         	 :: FloatBigFloat		# h(0)
-	g₀ 		     :: FloatBigFloat		# h'(0)
+	x  		     :: Number	#
+	dx           :: Number     #
+	ht 		     :: Number		# h(θ)
+	df           :: Number
+	gt 		     :: Number		# h'(θ)
+	h₀         	 :: Number		# h(0)
+	g₀ 		     :: Number		# h'(0)
 
-	start_time :: FloatBigFloat
+	start_time :: Number
 
- function LSAtT(t          :: FloatBigFloat;
-	            dx         :: FloatBigFloat = NaN,
-                ht         :: FloatBigFloat = NaN,
-				df         :: FloatBigFloat = NaN,
-                gt         :: FloatBigFloat = NaN,
-                h₀         :: FloatBigFloat = NaN,
-                g₀         :: FloatBigFloat = NaN,
-                start_time :: FloatBigFloat = NaN)
+ function LSAtT(t          :: Number;
+	            dx         :: Number = NaN,
+                ht         :: Number = NaN,
+				df         :: Number = NaN,
+                gt         :: Number = NaN,
+                h₀         :: Number = NaN,
+                g₀         :: Number = NaN,
+                start_time :: Number = NaN)
 
   return new(t, dx, ht, df, gt, h₀, g₀, start_time)
  end

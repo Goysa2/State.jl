@@ -2,10 +2,9 @@ module State
 
 const Iterate           = Union{Number, Vector, Nothing}
 const FloatVoid         = Union{Number, Nothing}
-const FloatBigFloat		= Number
 const MatrixType        = Any
 
-export Iterate, FloatVoid, MatrixType, FloatBigFloat
+export Iterate, FloatVoid, MatrixType
 
 include("GenericResultmod.jl")
 include("LSAtTmod.jl")
