@@ -22,7 +22,7 @@ Example:
 ls_a_t = LSAtT(1.0)
 update!(ls_a_t, x = 0.0, h₀ = obj(h, 0.0), g₀ = grad(h, 0.0))
 """
-mutable struct 	LSAtT <: AbstractResult
+mutable struct 	LSAtT <: AbstractState
 
 	x  		     :: Number	#
 	dx           :: Number     #

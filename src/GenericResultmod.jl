@@ -2,18 +2,18 @@
 # This is the Generic implementation of an AbstractResult. More documentation
 # can be found on the specific types and the README.
 ################################################################################
-abstract type AbstractResult end
+abstract type AbstractState end
 
-mutable struct GenericResult <: AbstractResult
+mutable struct GenericState <: AbstractState
 
 	x :: Iterate
 
-	function GenericResult(x :: Iterate;
-					       kwargs...)
+	function GenericState(x :: Iterate;
+					      kwargs...)
 		return new(x)
 	end
 end
 
-function update!(resultatx :: AbstractResult)
+function update!(stateatx :: AbstractState)
  return throw(error("NotImplemented function"))
 end

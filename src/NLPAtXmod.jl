@@ -16,7 +16,7 @@ the iteration x. Basic information is:
  All these information (except for x) are optionnal and need to be update when
  required. The update is done trhough the update! function.
 """
-mutable struct 	NLPAtX <: AbstractResult
+mutable struct 	NLPAtX <: AbstractState
 
 #Unconstrained State
 	x  		     :: Iterate			# current point

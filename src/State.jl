@@ -2,15 +2,15 @@ module State
 
 const Iterate           = Union{Number, Vector, Nothing}
 const FloatVoid         = Union{Number, Nothing}
-const MatrixType        = Any
+const MatrixType        = Any #Union{Number, AbstractArray, Nothing}
 
-export Iterate, FloatVoid, MatrixType
+#export Iterate, FloatVoid, MatrixType #is this useful ?
 
 include("GenericResultmod.jl")
 include("LSAtTmod.jl")
 include("NLPAtXmod.jl")
 
-export AbstractResult, GenericResult, update!
+export AbstractState, GenericState, update!
 export LSAtT, copy, update!
 export NLPAtX, update!
 
