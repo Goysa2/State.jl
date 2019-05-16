@@ -6,7 +6,7 @@ const MatrixType        = Any #Union{Number, AbstractArray, Nothing}
 
 #export Iterate, FloatVoid, MatrixType #is this useful ?
 
-include("GenericResultmod.jl")
+include("GenericStatemod.jl")
 include("LSAtTmod.jl")
 include("NLPAtXmod.jl")
 
