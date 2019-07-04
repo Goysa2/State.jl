@@ -34,3 +34,12 @@ ls_at_t_2 = copy(ls_at_t)
 @test ls_at_t_2.h₀ == 1.0
 @test ls_at_t_2.g₀ == 1.0
 @test ls_at_t_2.start_time == 0.0
+
+ls_64 = LSAtT(0.0)
+update!(ls_64, x = 1.0, dx = 1.0, ht = 1.0, df = 1.0, gt = 1.0, h₀ = 1.0)
+
+ls_32 = convert(Float32, ls_64)
+@test typeof(ls_32.x) == Float32
+@test typeof(ls_32.x) == Float32
+@test typeof(ls_32.x) == Float32
+@test typeof(ls_32.x) == Float32

@@ -2,6 +2,8 @@
 # TODO: add constraints
 ################################################################################
 
+import Base.convert
+
 """
 NLPAtX contains the important information concerning a non linear problem at
 the iteration x. Basic information is:
@@ -103,4 +105,19 @@ function update!(nlpatx :: NLPAtX;
  	nlpatx.start_time = tmps == nothing ? nlpatx.start_time : tmps
 
   	return nlpatx
+end
+
+function convert(T,  nlpatx :: NLPAtX)
+	nlpatxT         = NLPAtX(zeros(T, length(nlpatx.x)))
+	nlpatxT.x  		= typeof(nlpatx.x)      != Nothing ? convert.(T, nlpatx.x) 		: nlpatx.x
+	nlpatxT.fx 		= typeof(nlpatx.fx)     != Nothing ? convert.(T, nlpatx.fx) 	: nlpatx.fx
+	nlpatxT.gx 		= typeof(nlpatx.gx)     != Nothing ? convert.(T, nlpatx.gx) 	: nlpatx.gx
+	nlpatxT.g0 		= typeof(nlpatx.g0)     != Nothing ? convert.(T, nlpatx.g0) 	: nlpatx.g0
+	nlpatxT.Hx 	  	= typeof(nlpatx.Hx)     != Nothing ? convert.(T, nlpatx.Hx) 	: nlpatx.Hx
+	nlpatxT.mu 	  	= typeof(nlpatx.mu)     != Nothing ? convert.(T, nlpatx.mu) 	: nlpatx.mu
+	nlpatxT.cx 	  	= typeof(nlpatx.cx)     != Nothing ? convert.(T, nlpatx.cx) 	: nlpatx.cx
+	nlpatxT.Jx     	= typeof(nlpatx.Jx)     != Nothing ? convert.(T, nlpatx.Jx) 	: nlpatx.Jx
+	nlpatxT.lambda 	= typeof(nlpatx.lambda) != Nothing ? convert.(T, nlpatx.lambda) : nlpatx.lambda
+
+	return nlpatxT
 end
