@@ -2,8 +2,6 @@
 # TODO: add constraints
 ################################################################################
 
-import Base.convert
-
 """
 NLPAtX contains the important information concerning a non linear problem at
 the iteration x. Basic information is:
@@ -107,7 +105,7 @@ function update!(nlpatx :: NLPAtX;
   	return nlpatx
 end
 
-function convert(T,  nlpatx :: NLPAtX)
+function convert_nlp(T,  nlpatx :: NLPAtX)
 	nlpatxT         = NLPAtX(zeros(T, length(nlpatx.x)))
 	nlpatxT.x  		= typeof(nlpatx.x)      != Nothing ? convert.(T, nlpatx.x) 		: nlpatx.x
 	nlpatxT.fx 		= typeof(nlpatx.fx)     != Nothing ? convert.(T, nlpatx.fx) 	: nlpatx.fx

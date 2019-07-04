@@ -1,5 +1,4 @@
 import Base.copy
-import Base.convert
 
 """
 A structure designed to track line search information from one iteration to
@@ -101,7 +100,7 @@ function copy(ls_at_t :: LSAtT)
                  start_time = copy(ls_at_t.start_time))
 end
 
-function convert(T, ls_at_t :: LSAtT)
+function convert_ls(T, ls_at_t :: LSAtT)
 	ls_a_t_T        = LSAtT(T.(copy(ls_at_t.x)))
 
 	ls_a_t_T.dx = typeof(ls_at_t.x)  != Nothing ? convert.(T, ls_at_t.x)  : ls_at_t.dx

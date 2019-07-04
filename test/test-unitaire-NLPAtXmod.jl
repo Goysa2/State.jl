@@ -57,7 +57,7 @@ nlp_64.fx = 1.0
 nlp_64.gx = ones(10)
 nlp_64.g0 = ones(10)
 
-nlp_32 = convert(Float32, nlp_64)
+nlp_32 = convert_nlp(Float32, nlp_64)
 @test typeof(nlp_32.x[1]) == Float32
 @test typeof(nlp_32.fx[1]) == Float32
 @test typeof(nlp_32.gx[1]) == Float32
