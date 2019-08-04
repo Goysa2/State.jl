@@ -39,15 +39,15 @@ mutable struct 	NLPAtX <: AbstractState
 
  function NLPAtX( x          :: Iterate,
                   lambda     :: Iterate;
-                  dx         :: Iterate      = NaN*fill(1.0, size(x)),
+                  dx         :: Iterate      = fill(NaN, size(x)),
                   fx         :: FloatVoid    = NaN,
                   df         :: FloatVoid    = NaN,
-                  gx         :: Iterate      = NaN*fill(1.0, size(x)),
-				  g0         :: Iterate      = NaN*fill(1.0, size(x)),
-                  Hx         :: MatrixType   = zeros(0,0),
-                  mu         :: Iterate      = NaN*fill(1.0, size(x)),
-                  cx         :: Iterate      = NaN*fill(1, size(lambda)),
-                  Jx         :: MatrixType   = zeros(length(x),length(lambda)),
+                  gx         :: Iterate      = fill(NaN, size(x)),
+				  g0         :: Iterate      = fill(NaN, size(x)),
+                  Hx         :: MatrixType   = fill(NaN, (length(x),length(x))),
+                  mu         :: Iterate      = fill(NaN, size(x)),
+                  cx         :: Iterate      = fill(NaN, size(lambda)),
+                  Jx         :: MatrixType   = fill(NaN, (length(x),length(lambda)),
                   start_time :: FloatVoid    = NaN)
 
   return new(x, dx, fx, df, gx, g0, Hx, mu, cx, Jx, lambda, start_time)
@@ -58,12 +58,12 @@ end
 An additional constructor for unconstrained problems
 """
 function NLPAtX(x          :: Iterate;
-                dx         :: Iterate      = NaN*fill(1.0, size(x)),
+                dx         :: Iterate      = fill(NaN, size(x)),
                 fx         :: FloatVoid    = NaN,
                 df         :: FloatVoid    = NaN,
-                gx         :: Iterate      = NaN*fill(1.0, size(x)),
-                g0         :: Iterate      = NaN*fill(1.0, size(x)),
-                Hx         :: MatrixType   = zeros(0,0),
+                gx         :: Iterate      = fill(NaN, size(x)),
+                g0         :: Iterate      = fill(NaN, size(x)),
+                Hx         :: MatrixType   = fill(NaN, (length(x),length(x))),
                 start_time :: FloatVoid    = NaN)
 
 	return NLPAtX(x, zeros(0), dx = dx, fx = fx, df = df,
