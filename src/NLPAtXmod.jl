@@ -47,7 +47,7 @@ mutable struct 	NLPAtX <: AbstractState
                   Hx         :: MatrixType   = fill(NaN, (length(x),length(x))),
                   mu         :: Iterate      = fill(NaN, size(x)),
                   cx         :: Iterate      = fill(NaN, size(lambda)),
-                  Jx         :: MatrixType   = fill(NaN, (length(x),length(lambda)),
+                  Jx         :: MatrixType   = fill(NaN, (length(x), length(lambda))),
                   start_time :: FloatVoid    = NaN)
 
   return new(x, dx, fx, df, gx, g0, Hx, mu, cx, Jx, lambda, start_time)
