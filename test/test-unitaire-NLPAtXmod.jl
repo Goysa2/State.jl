@@ -6,9 +6,7 @@
 uncons_nlp_at_x = NLPAtX(zeros(10))
 
 @test (false in (uncons_nlp_at_x.x .== 0.0)) == false #assez bizarre comme test...
-@test (false in (isnan.(uncons_nlp_at_x.dx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.fx))) == false
-@test (false in (isnan.(uncons_nlp_at_x.df))) == false
 @test (false in (isnan.(uncons_nlp_at_x.gx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.g0))) == false
 @test (false in (uncons_nlp_at_x.Hx .== 0.0)) == false
@@ -22,9 +20,7 @@ uncons_nlp_at_x = NLPAtX(zeros(10))
 cons_nlp_at_x = NLPAtX(zeros(10), zeros(10))
 
 @test (false in (uncons_nlp_at_x.x .== 0.0)) == false #assez bizarre comme test...
-@test (false in (isnan.(uncons_nlp_at_x.dx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.fx))) == false
-@test (false in (isnan.(uncons_nlp_at_x.df))) == false
 @test (false in (isnan.(uncons_nlp_at_x.gx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.g0))) == false
 @test (false in (uncons_nlp_at_x.Hx .== 0.0)) == false
