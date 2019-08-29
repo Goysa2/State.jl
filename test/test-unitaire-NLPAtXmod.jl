@@ -6,9 +6,7 @@
 uncons_nlp_at_x = NLPAtX(zeros(10))
 
 @test (false in (uncons_nlp_at_x.x .== 0.0)) == false #assez bizarre comme test...
-@test (false in (isnan.(uncons_nlp_at_x.dx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.fx))) == false
-@test (false in (isnan.(uncons_nlp_at_x.df))) == false
 @test (false in (isnan.(uncons_nlp_at_x.gx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.g0))) == false
 @test (false in (isnan.(uncons_nlp_at_x.Hx))) == false
@@ -22,9 +20,7 @@ uncons_nlp_at_x = NLPAtX(zeros(10))
 cons_nlp_at_x = NLPAtX(zeros(10), zeros(10))
 
 @test (false in (uncons_nlp_at_x.x .== 0.0)) == false #assez bizarre comme test...
-@test (false in (isnan.(uncons_nlp_at_x.dx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.fx))) == false
-@test (false in (isnan.(uncons_nlp_at_x.df))) == false
 @test (false in (isnan.(uncons_nlp_at_x.gx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.g0))) == false
 @test (false in (isnan.(uncons_nlp_at_x.Hx))) == false
@@ -50,3 +46,24 @@ update!(uncons_nlp_at_x, lambda = ones(10), tmps = 1.0)
 @test (false in (uncons_nlp_at_x.Jx .== 1.0)) == false
 @test (false in (uncons_nlp_at_x.lambda .== 1.0)) == false
 @test uncons_nlp_at_x.start_time == 1.0
+
+nlp_64 = NLPAtX(ones(10))
+nlp_64.x = ones(10)
+nlp_64.fx = 1.0
+nlp_64.gx = ones(10)
+nlp_64.g0 = ones(10)
+
+nlp_32 = convert_nlp(Float32, nlp_64)
+@test typeof(nlp_32.x[1]) == Float32
+@test typeof(nlp_32.fx[1]) == Float32
+@test typeof(nlp_32.gx[1]) == Float32
+@test typeof(nlp_32.g0[1]) == Float32
+@test isnan(nlp_32.mu[1])
+@test isnan(nlp_32.start_time)
+
+@test typeof(nlp_64.x[1]) == Float64
+@test typeof(nlp_64.fx[1]) == Float64
+@test typeof(nlp_64.gx[1]) == Float64
+@test typeof(nlp_64.g0[1]) == Float64
+@test isnan(nlp_64.mu[1])
+@test isnan(nlp_64.start_time)

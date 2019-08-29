@@ -12,6 +12,6 @@ include("NLPAtXmod.jl")
 
 export AbstractState, GenericState, update!
 export LSAtT, copy, update!
-export NLPAtX, update!
+export NLPAtX, update!, convert_nlp, convert_ls
 
 end # module
