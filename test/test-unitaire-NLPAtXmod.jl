@@ -5,7 +5,7 @@
 # On vérifie que le constructeur pour problème sans contrainte fonctionne
 uncons_nlp_at_x = NLPAtX(zeros(10))
 
-@test (false in (uncons_nlp_at_x.x .== 0.0)) == false #assez bizarre comme test...
+@test (false in (uncons_nlp_at_x.x .== 0.0))  == false #assez bizarre comme test...
 @test (false in (isnan.(uncons_nlp_at_x.fx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.gx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.g0))) == false
@@ -13,8 +13,10 @@ uncons_nlp_at_x = NLPAtX(zeros(10))
 @test (false in (isnan.(uncons_nlp_at_x.mu))) == false
 @test (false in (isnan.(uncons_nlp_at_x.cx))) == false
 @test (false in (isnan.(uncons_nlp_at_x.Jx))) == false
+
 @test (false in (isnan.(uncons_nlp_at_x.lambda))) == false
 @test (false in (isnan.(uncons_nlp_at_x.start_time))) == false
+@test (!(uncons_nlp_at_x.evals == nothing))
 
 # On vérifie que le constucteur pour problème avec contrainte fonctionne
 cons_nlp_at_x = NLPAtX(zeros(10), zeros(10))

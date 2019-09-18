@@ -1,11 +1,22 @@
+import NLPModels: Counters
+
 """
 NLPAtX contains the important information concerning a non linear problem at
 the iteration x. Basic information is:
  - x the current candidate for solution to our original problem
  - f(x) which is the funciton evaluation at x
  - g(x) which is the gradient evaluation at x
- - g(0) which is the funciton evaluation at x0 (our starting point)
+ ** - g(0) which is the function evaluation at x0 (our starting point) **
  - Hx which is the hessian representation at x
+
+ - mu : Lagrange multiplier of the bounds constraints
+
+ - cx : evaluation of the constraint function at x
+ - Jx : jacobian matrix of the constraint function at x
+ - lambda : Lagrange multiplier of the constraints
+
+ - start_time : TO BE DOCUMENTED
+ - evals : number of evaluations of the function (import the type NLPModels.Counters)
 
  All these information (except for x) are optionnal and need to be update when
  required. The update is done trhough the update! function.
@@ -13,34 +24,37 @@ the iteration x. Basic information is:
 mutable struct 	NLPAtX <: AbstractState
 
 #Unconstrained State
-	x  	     :: Iterate		# current point
-	fx 	     :: FloatVoid	# objective function
+	x  	         :: Iterate		# current point
+	fx 	         :: FloatVoid	# objective function
 	gx           :: Iterate		# gradient
-	g0           :: Iterate
-        Hx           :: MatrixType  	# Accurate?
+	g0           :: Iterate     # undocumented?
+    Hx           :: MatrixType  # Accurate?
 
 #Bounds State
-    	mu           :: Iterate     	#Lagrange multipliers with bounds
+    mu           :: Iterate     	#Lagrange multipliers with bounds
 
 #Constrained State
-    	cx           :: Iterate 	# vector of constraints lc <= c(x) <= uc
-    	Jx           :: MatrixType 	# jacobian matrix
-    	lambda       :: Iterate 	# Lagrange multipliers
+    cx           :: Iterate 	# vector of constraints lc <= c(x) <= uc
+    Jx           :: MatrixType 	# jacobian matrix
+    lambda       :: Iterate 	# Lagrange multipliers
 
-    	start_time   :: FloatVoid
+ #Resources State
+    start_time   :: FloatVoid
+    evals        :: Counters
 
  function NLPAtX(x          :: Iterate,
                  lambda     :: Iterate;
                  fx         :: FloatVoid    = NaN,
                  gx         :: Iterate      = NaN * fill(1.0, size(x)),
-		 g0         :: Iterate      = NaN * fill(1.0, size(x)),
+		         g0         :: Iterate      = NaN * fill(1.0, size(x)),
                  Hx         :: MatrixType   = zeros(0,0),
                  mu         :: Iterate      = NaN * fill(1.0, size(x)),
                  cx         :: Iterate      = NaN * fill(1, size(lambda)),
                  Jx         :: MatrixType   = zeros(length(x),length(lambda)),
-                 start_time :: FloatVoid    = NaN)
+                 start_time :: FloatVoid    = NaN,
+                 evals      :: Counters     = Counters())
 
-  return new(x, fx, gx, g0, Hx, mu, cx, Jx, lambda, start_time)
+  return new(x, fx, gx, g0, Hx, mu, cx, Jx, lambda, start_time, evals)
  end
 end
 
@@ -52,45 +66,42 @@ function NLPAtX(x          :: Iterate;
                 gx         :: Iterate      = NaN * fill(1.0, size(x)),
                 g0         :: Iterate      = NaN * fill(1.0, size(x)),
                 Hx         :: MatrixType   = zeros(0,0),
-                start_time :: FloatVoid    = NaN)
+                start_time :: FloatVoid    = NaN,
+                evals      :: Counters     = Counters())
 
 	return NLPAtX(x, zeros(0), fx = fx, gx = gx, g0 = g0,
-                  Hx = Hx, start_time = start_time)
+                  Hx = Hx, start_time = start_time, evals = evals)
 end
 
 """
 Updates the (desired) values of an object of type NLPAtX.
 """
 function update!(nlpatx :: NLPAtX;
-	         x      :: Iterate    = nothing,
-		 fx     :: FloatVoid  = nothing,
-		 gx     :: Iterate    = nothing,
-		 g0     :: Iterate    = nothing,
-		 Hx     :: MatrixType = nothing,
+	             x      :: Iterate    = nothing,
+		         fx     :: FloatVoid  = nothing,
+		         gx     :: Iterate    = nothing,
+		         g0     :: Iterate    = nothing,
+		         Hx     :: MatrixType = nothing,
                  mu     :: Iterate    = nothing,
                  cx     :: Iterate    = nothing,
                  Jx     :: MatrixType = nothing,
                  lambda :: Iterate    = nothing,
-		 tmps   :: FloatVoid  = nothing)
-	
-	if x != nothing
-     	 nlpatx.x   = x
- 	end
-	
- 	if fx != nothing
-     	 nlpatx.fx   =  fx
- 	end
+		         tmps   :: FloatVoid  = nothing,
+                 evals  :: Union{Counters, Nothing}  = nothing)
 
+    nlpatx.x   = x  == nothing  ? nlpatx.x   : x
+    nlpatx.fx  = fx == nothing  ? nlpatx.fx  : fx
  	nlpatx.gx  = gx == nothing  ? nlpatx.gx  : gx
  	nlpatx.g0  = g0 == nothing  ? nlpatx.g0  : g0
  	nlpatx.Hx  = Hx == nothing  ? nlpatx.Hx  : Hx
  	nlpatx.mu  = mu == nothing  ? nlpatx.mu  : mu
  	nlpatx.cx  = cx == nothing  ? nlpatx.cx  : cx
  	nlpatx.Jx  = Jx == nothing  ? nlpatx.Jx  : Jx
-	
- 	nlpatx.lambda  = lambda == nothing  ? nlpatx.lambda  : lambda
 
- 	nlpatx.start_time = tmps == nothing ? nlpatx.start_time : tmps
+ 	nlpatx.lambda     = lambda == nothing  ? nlpatx.lambda    : lambda
+
+ 	nlpatx.start_time = tmps   == nothing ? nlpatx.start_time : tmps
+    nlpatx.evals      = evals  == nothing ? nlpatx.evals      : evals
 
   	return nlpatx
 end
@@ -100,17 +111,17 @@ convert_nlp:
 TO DO
 """
 function convert_nlp(T,  nlpatx :: NLPAtX)
-	
-	nlpatxT         	= NLPAtX(zeros(T, length(nlpatx.x)))
-	nlpatxT.x  		= typeof(nlpatx.x)      != Nothing ? convert.(T, nlpatx.x) 	: nlpatx.x
+
+	nlpatxT         = NLPAtX(zeros(T, length(nlpatx.x)))
+	nlpatxT.x  		= typeof(nlpatx.x)      != Nothing ? convert.(T, nlpatx.x) 	    : nlpatx.x
 	nlpatxT.fx 		= typeof(nlpatx.fx)     != Nothing ? convert.(T, nlpatx.fx) 	: nlpatx.fx
 	nlpatxT.gx 		= typeof(nlpatx.gx)     != Nothing ? convert.(T, nlpatx.gx) 	: nlpatx.gx
 	nlpatxT.g0 		= typeof(nlpatx.g0)     != Nothing ? convert.(T, nlpatx.g0) 	: nlpatx.g0
 	nlpatxT.Hx 	  	= typeof(nlpatx.Hx)     != Nothing ? convert.(T, nlpatx.Hx) 	: nlpatx.Hx
 	nlpatxT.mu 	  	= typeof(nlpatx.mu)     != Nothing ? convert.(T, nlpatx.mu) 	: nlpatx.mu
 	nlpatxT.cx 	  	= typeof(nlpatx.cx)     != Nothing ? convert.(T, nlpatx.cx) 	: nlpatx.cx
-	nlpatxT.Jx     		= typeof(nlpatx.Jx)     != Nothing ? convert.(T, nlpatx.Jx) 	: nlpatx.Jx
-	nlpatxT.lambda 		= typeof(nlpatx.lambda) != Nothing ? convert.(T, nlpatx.lambda) : nlpatx.lambda
+	nlpatxT.Jx     	= typeof(nlpatx.Jx)     != Nothing ? convert.(T, nlpatx.Jx) 	: nlpatx.Jx
+	nlpatxT.lambda 	= typeof(nlpatx.lambda) != Nothing ? convert.(T, nlpatx.lambda) : nlpatx.lambda
 
 	return nlpatxT
 end
