@@ -6,7 +6,6 @@ the iteration x. Basic information is:
  - x the current candidate for solution to our original problem
  - f(x) which is the funciton evaluation at x
  - g(x) which is the gradient evaluation at x
- ** - g(0) which is the function evaluation at x0 (our starting point) **
  - Hx which is the hessian representation at x
 
  - mu : Lagrange multiplier of the bounds constraints
@@ -27,7 +26,6 @@ mutable struct 	NLPAtX <: AbstractState
 	x  	         :: Iterate		# current point
 	fx 	         :: FloatVoid	# objective function
 	gx           :: Iterate		# gradient
-	g0           :: Iterate     # undocumented?
     Hx           :: MatrixType  # Accurate?
 
 #Bounds State
@@ -46,7 +44,6 @@ mutable struct 	NLPAtX <: AbstractState
                  lambda     :: Iterate;
                  fx         :: FloatVoid    = NaN,
                  gx         :: Iterate      = NaN * fill(1.0, size(x)),
-		         g0         :: Iterate      = NaN * fill(1.0, size(x)),
                  Hx         :: MatrixType   = zeros(0,0),
                  mu         :: Iterate      = NaN * fill(1.0, size(x)),
                  cx         :: Iterate      = NaN * fill(1, size(lambda)),
@@ -54,7 +51,7 @@ mutable struct 	NLPAtX <: AbstractState
                  start_time :: FloatVoid    = NaN,
                  evals      :: Counters     = Counters())
 
-  return new(x, fx, gx, g0, Hx, mu, cx, Jx, lambda, start_time, evals)
+  return new(x, fx, gx, Hx, mu, cx, Jx, lambda, start_time, evals)
  end
 end
 
@@ -64,12 +61,11 @@ An additional constructor for unconstrained problems
 function NLPAtX(x          :: Iterate;
                 fx         :: FloatVoid    = NaN,
                 gx         :: Iterate      = NaN * fill(1.0, size(x)),
-                g0         :: Iterate      = NaN * fill(1.0, size(x)),
                 Hx         :: MatrixType   = zeros(0,0),
                 start_time :: FloatVoid    = NaN,
                 evals      :: Counters     = Counters())
 
-	return NLPAtX(x, zeros(0), fx = fx, gx = gx, g0 = g0,
+	return NLPAtX(x, zeros(0), fx = fx, gx = gx,
                   Hx = Hx, start_time = start_time, evals = evals)
 end
 
@@ -80,7 +76,6 @@ function update!(nlpatx :: NLPAtX;
 	             x      :: Iterate    = nothing,
 		         fx     :: FloatVoid  = nothing,
 		         gx     :: Iterate    = nothing,
-		         g0     :: Iterate    = nothing,
 		         Hx     :: MatrixType = nothing,
                  mu     :: Iterate    = nothing,
                  cx     :: Iterate    = nothing,
@@ -92,7 +87,6 @@ function update!(nlpatx :: NLPAtX;
     nlpatx.x   = x  == nothing  ? nlpatx.x   : x
     nlpatx.fx  = fx == nothing  ? nlpatx.fx  : fx
  	nlpatx.gx  = gx == nothing  ? nlpatx.gx  : gx
- 	nlpatx.g0  = g0 == nothing  ? nlpatx.g0  : g0
  	nlpatx.Hx  = Hx == nothing  ? nlpatx.Hx  : Hx
  	nlpatx.mu  = mu == nothing  ? nlpatx.mu  : mu
  	nlpatx.cx  = cx == nothing  ? nlpatx.cx  : cx
@@ -116,7 +110,6 @@ function convert_nlp(T,  nlpatx :: NLPAtX)
 	nlpatxT.x  		= typeof(nlpatx.x)      != Nothing ? convert.(T, nlpatx.x) 	    : nlpatx.x
 	nlpatxT.fx 		= typeof(nlpatx.fx)     != Nothing ? convert.(T, nlpatx.fx) 	: nlpatx.fx
 	nlpatxT.gx 		= typeof(nlpatx.gx)     != Nothing ? convert.(T, nlpatx.gx) 	: nlpatx.gx
-	nlpatxT.g0 		= typeof(nlpatx.g0)     != Nothing ? convert.(T, nlpatx.g0) 	: nlpatx.g0
 	nlpatxT.Hx 	  	= typeof(nlpatx.Hx)     != Nothing ? convert.(T, nlpatx.Hx) 	: nlpatx.Hx
 	nlpatxT.mu 	  	= typeof(nlpatx.mu)     != Nothing ? convert.(T, nlpatx.mu) 	: nlpatx.mu
 	nlpatxT.cx 	  	= typeof(nlpatx.cx)     != Nothing ? convert.(T, nlpatx.cx) 	: nlpatx.cx
