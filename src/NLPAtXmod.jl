@@ -50,7 +50,7 @@ mutable struct 	NLPAtX <: AbstractState
                  Hx         :: MatrixType   = zeros(0,0),
                  mu         :: Iterate      = NaN * fill(1.0, size(x)),
                  cx         :: Iterate      = NaN * fill(1, size(lambda)),
-                 Jx         :: MatrixType   = zeros(length(x),length(lambda)),
+                 Jx         :: MatrixType   = zeros(length(lambda),length(x)),
                  start_time :: FloatVoid    = NaN,
                  evals      :: Counters     = Counters())
 
