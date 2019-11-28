@@ -1,0 +1,10 @@
+name = "State"
+uuid = "3265530d-8def-42a5-a702-e1236a3732a7"
+authors = ["Goysa2 <samuel.goyette@usherbrooke.ca>"]
+version = "0.0.0"
+
+[deps]
+NLPModels = "a4795742-8479-5a88-8948-cc11e1c8c1a6"
+
+[compat]
+julia = "^1.0.0"
