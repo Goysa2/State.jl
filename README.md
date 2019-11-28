@@ -9,7 +9,7 @@ So far we cover line search problems and unconstrained optimization problems.
 Works with Julia 0.7+
 More documentation will come soon.
 
-[![Build Status](https://travis-ci.org/Goysa2/State.jl.svg?branch=julia-0.7)](https://travis-ci.org/Goysa2/State.jl)
+[![Build Status](https://travis-ci.org/Goysa2/State.jl.svg?branch=master)](https://travis-ci.org/Goysa2/State.jl)
 
 [![Coverage Status](https://coveralls.io/repos/Goysa2/State.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/Goysa2/State.jl?branch=julia-0.7)
 

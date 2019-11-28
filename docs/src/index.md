@@ -1,0 +1,10 @@
+# State
+
+This package provides types that tracks information for different types of
+optimization problems. The information track can vary depending on the algorithm.
+We can track for example the value of our point, the function evaluation, the
+gradient, the representation of the hessian, etc.
+
+So far we cover line search problems and unconstrained optimization problems.
+Works with Julia 0.7+
+More documentation will come soon.
