@@ -29,13 +29,13 @@ matrix:
 #  - if [ $TRAVIS_OS_NAME = osx ]; then brew install gcc; fi
 
 ## uncomment the following lines to override the default test script
-script:
- - julia -e 'using Pkg; Pkg.clone(pwd()); Pkg.build("State"); Pkg.test("State"; coverage=true)'
-after_success:
-  # push coverage results to Coveralls
-  - julia -e 'using Pkg; cd(Pkg.dir("State")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
-  # push coverage results to Codecov
-  - julia -e 'using Pkg; cd(Pkg.dir("State")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
-
+# script:
+#  - julia -e 'using Pkg; Pkg.clone(pwd()); Pkg.build("State"); Pkg.test("State"; coverage=true)'
+# after_success:
+#   # push coverage results to Coveralls
+#   - julia -e 'using Pkg; cd(Pkg.dir("State")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
+#   # push coverage results to Codecov
+#   - julia -e 'using Pkg; cd(Pkg.dir("State")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
+#
 after_success:
 - julia -e 'using Pkg; cd(Pkg.dir("State")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
