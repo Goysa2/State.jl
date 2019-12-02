@@ -22,5 +22,8 @@ function update!(stateatx :: AbstractState;
 		 		 x        :: Iterate    = nothing,
 		 	     tmps     :: FloatVoid  = nothing)
 
- return throw(error("NotImplemented function"))
+ stateatx.x          = x      == nothing  ? stateatx.x   : x
+ stateatx.start_time = tmps   == nothing ? stateatx.start_time : tmps
+
+ return stateatx #throw(error("NotImplemented function"))
 end
