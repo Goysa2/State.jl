@@ -1,3 +1,0 @@
-var documenterSearchIndex = {"docs":
-[{"location":"index.html#State-1","page":"State","title":"State","text":"","category":"section"},{"location":"index.html#","page":"State","title":"State","text":"This package provides types that tracks information for different types of optimization problems. The information track can vary depending on the algorithm. We can track for example the value of our point, the function evaluation, the gradient, the representation of the hessian, etc.","category":"page"},{"location":"index.html#","page":"State","title":"State","text":"So far we cover line search problems and unconstrained optimization problems. Works with Julia 0.7+ More documentation will come soon.","category":"page"}]
-}
