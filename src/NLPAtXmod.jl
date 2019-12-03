@@ -14,7 +14,7 @@ the iteration x. Basic information is:
  - Jx : jacobian matrix of the constraint function at x
  - lambda : Lagrange multiplier of the constraints
 
- - start_time : TO BE DOCUMENTED
+ - start_time : Default is a NaN, can be updated to fit the start of the algorithm.
  - evals : number of evaluations of the function (import the type NLPModels.Counters)
 
  All these information (except for x) are optionnal and need to be update when
@@ -71,6 +71,9 @@ end
 
 """
 Updates the (desired) values of an object of type NLPAtX.
+Inputs:
+ - An NLPAtX object
+ - Any keywords that needs to be updated.
 """
 function update!(nlpatx :: NLPAtX;
                  x      :: Iterate    = nothing,
@@ -100,21 +103,18 @@ function update!(nlpatx :: NLPAtX;
     return nlpatx
 end
 
-"""
-convert_nlp:
-TO DO
-"""
-function convert_nlp(T,  nlpatx :: NLPAtX)
 
-    nlpatxT         = NLPAtX(zeros(T, length(nlpatx.x)))
-    nlpatxT.x       = typeof(nlpatx.x)      != Nothing ? convert.(T, nlpatx.x)      : nlpatx.x
-    nlpatxT.fx      = typeof(nlpatx.fx)     != Nothing ? convert.(T, nlpatx.fx)     : nlpatx.fx
-    nlpatxT.gx      = typeof(nlpatx.gx)     != Nothing ? convert.(T, nlpatx.gx)     : nlpatx.gx
-    nlpatxT.Hx      = typeof(nlpatx.Hx)     != Nothing ? convert.(T, nlpatx.Hx)     : nlpatx.Hx
-    nlpatxT.mu      = typeof(nlpatx.mu)     != Nothing ? convert.(T, nlpatx.mu)     : nlpatx.mu
-    nlpatxT.cx      = typeof(nlpatx.cx)     != Nothing ? convert.(T, nlpatx.cx)     : nlpatx.cx
-    nlpatxT.Jx      = typeof(nlpatx.Jx)     != Nothing ? convert.(T, nlpatx.Jx)     : nlpatx.Jx
-    nlpatxT.lambda  = typeof(nlpatx.lambda) != Nothing ? convert.(T, nlpatx.lambda) : nlpatx.lambda
-
-    return nlpatxT
-end
+# function convert_nlp(T,  nlpatx :: NLPAtX)
+#
+#     nlpatxT         = NLPAtX(zeros(T, length(nlpatx.x)))
+#     nlpatxT.x       = typeof(nlpatx.x)      != Nothing ? convert.(T, nlpatx.x)      : nlpatx.x
+#     nlpatxT.fx      = typeof(nlpatx.fx)     != Nothing ? convert.(T, nlpatx.fx)     : nlpatx.fx
+#     nlpatxT.gx      = typeof(nlpatx.gx)     != Nothing ? convert.(T, nlpatx.gx)     : nlpatx.gx
+#     nlpatxT.Hx      = typeof(nlpatx.Hx)     != Nothing ? convert.(T, nlpatx.Hx)     : nlpatx.Hx
+#     nlpatxT.mu      = typeof(nlpatx.mu)     != Nothing ? convert.(T, nlpatx.mu)     : nlpatx.mu
+#     nlpatxT.cx      = typeof(nlpatx.cx)     != Nothing ? convert.(T, nlpatx.cx)     : nlpatx.cx
+#     nlpatxT.Jx      = typeof(nlpatx.Jx)     != Nothing ? convert.(T, nlpatx.Jx)     : nlpatx.Jx
+#     nlpatxT.lambda  = typeof(nlpatx.lambda) != Nothing ? convert.(T, nlpatx.lambda) : nlpatx.lambda
+#
+#     return nlpatxT
+# end

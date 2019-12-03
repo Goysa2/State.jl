@@ -6,19 +6,21 @@ another. If we have f : ℜⁿ → ℜ, then we define h(θ) = f(x + θ*d) where
 are vectors of same dimension and θ is a scalar, more specifically our step size.
 
 Tracked data can include:
- 	- x : our current step size
-	- ht : h(θ) at the current iteration
-	- gt : h'(θ)
-	- h₀ : h(0)
-	- g₀ : h'(0)
-	- start_time: the time at which the line search algorithm started.
+ - x : our current step size
+ - ht : h(θ) at the current iteration
+ - gt : h'(θ)
+ - h₀ : h(0)
+ - g₀ : h'(0)
+ - start_time: the time at which the line search algorithm started.
 
 Unless they are defined otherwise, the default value for all parameter is NaN
 (except for x). They can be updated through the update! function.
 
 Example:
+```
 ls_a_t = LSAtT(1.0)
 update!(ls_a_t, x = 0.0, h₀ = obj(h, 0.0), g₀ = grad(h, 0.0))
+```
 """
 mutable struct 	LSAtT <: AbstractState
 
@@ -76,13 +78,13 @@ function copy(ls_at_t :: LSAtT)
                  start_time = copy(ls_at_t.start_time))
 end
 
-function convert_ls(T, ls_at_t :: LSAtT)
-    ls_a_t_T = LSAtT(T.(copy(ls_at_t.x)))
-
-    ls_a_t_T.ht = typeof(ls_at_t.ht) != Nothing ? convert.(T, ls_at_t.ht) : ls_at_t.ht
-    ls_a_t_T.gt = typeof(ls_at_t.gt) != Nothing ? convert.(T, ls_at_t.gt) : ls_at_t.gt
-    ls_a_t_T.h₀ = typeof(ls_at_t.h₀) != Nothing ? convert.(T, ls_at_t.h₀) : ls_at_t.h₀
-    ls_a_t_T.g₀ = typeof(ls_at_t.g₀) != Nothing ? convert.(T, ls_at_t.g₀) : ls_at_t.g₀
-
-    return ls_a_t_T
-end
+# function convert_ls(T, ls_at_t :: LSAtT)
+#     ls_a_t_T = LSAtT(T.(copy(ls_at_t.x)))
+#
+#     ls_a_t_T.ht = typeof(ls_at_t.ht) != Nothing ? convert.(T, ls_at_t.ht) : ls_at_t.ht
+#     ls_a_t_T.gt = typeof(ls_at_t.gt) != Nothing ? convert.(T, ls_at_t.gt) : ls_at_t.gt
+#     ls_a_t_T.h₀ = typeof(ls_at_t.h₀) != Nothing ? convert.(T, ls_at_t.h₀) : ls_at_t.h₀
+#     ls_a_t_T.g₀ = typeof(ls_at_t.g₀) != Nothing ? convert.(T, ls_at_t.g₀) : ls_at_t.g₀
+#
+#     return ls_a_t_T
+# end

@@ -51,15 +51,15 @@ nlp_64.x = ones(10)
 nlp_64.fx = 1.0
 nlp_64.gx = ones(10)
 
-nlp_32 = convert_nlp(Float32, nlp_64)
-@test typeof(nlp_32.x[1]) == Float32
-@test typeof(nlp_32.fx[1]) == Float32
-@test typeof(nlp_32.gx[1]) == Float32
-@test isnan(nlp_32.mu[1])
-@test isnan(nlp_32.start_time)
-
-@test typeof(nlp_64.x[1]) == Float64
-@test typeof(nlp_64.fx[1]) == Float64
-@test typeof(nlp_64.gx[1]) == Float64
-@test isnan(nlp_64.mu[1])
-@test isnan(nlp_64.start_time)
+# nlp_32 = convert_nlp(Float32, nlp_64)
+# @test typeof(nlp_32.x[1]) == Float32
+# @test typeof(nlp_32.fx[1]) == Float32
+# @test typeof(nlp_32.gx[1]) == Float32
+# @test isnan(nlp_32.mu[1])
+# @test isnan(nlp_32.start_time)
+#
+# @test typeof(nlp_64.x[1]) == Float64
+# @test typeof(nlp_64.fx[1]) == Float64
+# @test typeof(nlp_64.gx[1]) == Float64
+# @test isnan(nlp_64.mu[1])
+# @test isnan(nlp_64.start_time)
