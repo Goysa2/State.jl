@@ -13,4 +13,4 @@ More documentation will come soon.
 
 [![Coverage Status](https://coveralls.io/repos/Goysa2/State.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/Goysa2/State.jl?branch=julia-0.7)
 
-[![codecov.io](http://codecov.io/github/Goysa2/State.jl/coverage.svg?branch=master)](http://codecov.io/github/Goysa2/State.jl?branch=julia-0.7)
+[![codecov.io](http://codecov.io/github/Goysa2/State.jl/coverage.svg?branch=master)](http://codecov.io/github/Goysa2/State.jl?branch=master)
